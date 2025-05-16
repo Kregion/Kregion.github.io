@@ -174,7 +174,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-05-16 16:48:57 / 修改时间：17:38:23" itemprop="dateCreated datePublished" datetime="2025-05-16T16:48:57+08:00">2025-05-16</time>
+              <time title="创建时间：2025-05-16 16:48:57 / 修改时间：17:49:22" itemprop="dateCreated datePublished" datetime="2025-05-16T16:48:57+08:00">2025-05-16</time>
             </span>
 
           
@@ -189,13 +189,11 @@
 
       
           <h1 id="等效电路模型"><a href="#等效电路模型" class="headerlink" title="等效电路模型"></a>等效电路模型</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>参考：锂电池的二阶RC网络等效电路模型 - 車馬炮的文章 - 知乎 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/407572989">https://zhuanlan.zhihu.com/p/407572989</a></p>
-<img src="https://pic3.zhimg.com/80/v2-3330cf9c2da3c83b584175dd5f67abd6_720w.webp" style="zoom:80%;" />
-
+<p><img src="https://pic3.zhimg.com/80/v2-3330cf9c2da3c83b584175dd5f67abd6_720w.webp" style="zoom:80%;" /></p>
 <p><strong>二阶RC网络等效电路模型</strong></p>
-<img src="https://pic4.zhimg.com/80/v2-0820cb9087a345d8e328ec67f2451fe7_720w.webp" alt="img" style="zoom: 80%;" />
-
+<p><img src="https://pic4.zhimg.com/80/v2-0820cb9087a345d8e328ec67f2451fe7_720w.webp" alt="img" style="zoom: 80%;" /></p>
 <ul>
-<li><p>锂离子动力电池正负极之间存在电位差，外在表现为电池的电动势能，用电容器模拟；电池电动势能与电池SOC之间存在关系，在模型中用EMF&#x3D;f(SOC)表达式描述；</p>
+<li><p>锂离子动力电池正负极之间存在电位差，外在表现为电池的电动势能，用电容器模拟；电池电动势能与电池SOC之间存在关系，在模型中用EMF=f(SOC)表达式描述；</p>
 </li>
 <li><p>锂离子动力电池通过锂离子在正负极之间的嵌入、脱嵌和移动来实现电流的输出，在这个电化学反应和离子运动的过程中，必然会产生一定的阻力，因此在建模时，我们使用电池的内阻来模拟。研究表明，在电池工作时，由于形成的机理不同，电池的内阻又可以进一步划分为<strong>欧姆内阻</strong>和<strong>极化内阻</strong>：</p>
 </li>
@@ -211,200 +209,301 @@
 <p>在模型中，通过电阻来描述欧姆内阻，通过两个阻容网络（RC 网络）来描述极化内阻。通过I和U来描述电池工作时的负载电流和电池的端电压。从图中可以看出改进模型通过二极管的单向导电性对欧姆内阻区别充电与放电设置。放电时对应放电欧姆内阻，充电时对应充电欧姆内阻。考虑到电池的开路电压应该包括滞回电压和电动势两部分，所以增加了等效电压源部分：其中 EMF 是电池平衡电势，是滞回电压（历史电流方向会影响的正负号）。</p>
 <h1 id="基于等效电路与扩展卡尔曼滤波的SOC估算方法"><a href="#基于等效电路与扩展卡尔曼滤波的SOC估算方法" class="headerlink" title="基于等效电路与扩展卡尔曼滤波的SOC估算方法"></a>基于等效电路与扩展卡尔曼滤波的SOC估算方法</h1><h2 id="1-数据需求"><a href="#1-数据需求" class="headerlink" title="1. 数据需求"></a>1. 数据需求</h2><p><strong>HPPC测试数据：三元锂与磷酸铁锂</strong></p>
 <p>基于HPPC测试数据对等效电路模型中的SOC-OCV，内阻，极化电阻和极化电容进行识别，在测试前先对电芯进行恒流恒压满充，然后根据如下步骤进行测试:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">步骤</th>
-<th align="center">电池状态</th>
-<th align="center">时间（s）</th>
-<th align="center">电流倍率（C）</th>
-<th align="center">SOC（%）</th>
+<th style="text-align:center">步骤</th>
+<th style="text-align:center">电池状态</th>
+<th style="text-align:center">时间（s）</th>
+<th style="text-align:center">电流倍率（C）</th>
+<th style="text-align:center">SOC（%）</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="center">静置</td>
-<td align="center">7200</td>
-<td align="center">0</td>
-<td align="center">100</td>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">静置</td>
+<td style="text-align:center">7200</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">100</td>
 </tr>
 <tr>
-<td align="center">2</td>
-<td align="center">放电</td>
-<td align="center">360</td>
-<td align="center">0.5</td>
-<td align="center">95</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">放电</td>
+<td style="text-align:center">360</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">95</td>
 </tr>
 <tr>
-<td align="center">3</td>
-<td align="center">静置</td>
-<td align="center">1200</td>
-<td align="center">0</td>
-<td align="center">95</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">静置</td>
+<td style="text-align:center">1200</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">95</td>
 </tr>
 <tr>
-<td align="center">4</td>
-<td align="center">充电</td>
-<td align="center">10</td>
-<td align="center">1</td>
-<td align="center">95</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">充电</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">95</td>
 </tr>
 <tr>
-<td align="center">5</td>
-<td align="center">静置</td>
-<td align="center">40</td>
-<td align="center">0</td>
-<td align="center">95</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">静置</td>
+<td style="text-align:center">40</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">95</td>
 </tr>
 <tr>
-<td align="center">6</td>
-<td align="center">放电</td>
-<td align="center">10</td>
-<td align="center">0.75</td>
-<td align="center">95</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">放电</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">0.75</td>
+<td style="text-align:center">95</td>
 </tr>
 <tr>
-<td align="center">7</td>
-<td align="center">静置</td>
-<td align="center">180</td>
-<td align="center">0</td>
-<td align="center">95</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">静置</td>
+<td style="text-align:center">180</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">95</td>
 </tr>
 <tr>
-<td align="center">8</td>
-<td align="center">放电</td>
-<td align="center">360</td>
-<td align="center">0.5</td>
-<td align="center">90</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">放电</td>
+<td style="text-align:center">360</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">90</td>
 </tr>
 <tr>
-<td align="center">9</td>
-<td align="center">静置</td>
-<td align="center">1200</td>
-<td align="center">0</td>
-<td align="center">90</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">静置</td>
+<td style="text-align:center">1200</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">90</td>
 </tr>
 <tr>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
 </tr>
-</tbody></table>
-<h2 id="2-方法介绍"><a href="#2-方法介绍" class="headerlink" title="2. 方法介绍"></a>2. 方法介绍</h2><h3 id="2-1-等效电路模型"><a href="#2-1-等效电路模型" class="headerlink" title="2.1 等效电路模型"></a>2.1 等效电路模型</h3><img src="C:\Users\DRegionZ\AppData\Roaming\Typora\typora-user-images\image-20221115140556078.png" alt="image-20221115140556078" style="zoom:80%;" />
-
-<p>二阶等效电路的动态方程如下：<br>$$<br>\begin{align} U_L&amp;&#x3D;U_{OCV}-IR_0-U_{p1}-U_{p2} \<br>I&amp;&#x3D;\frac{U_{p1}}{R_{p1}}+C_{p1}\frac{dU_{p1}}{dt}&#x3D;\frac{U_{p2}}{R_{p2}}+C_{p2}\frac{dU_{p2}}{dt}<br>\end{align}<br>$$<br>求解微分方程$I&#x3D;\frac{U_{p}}{R_{p}}+C_{p}\frac{dU_{p}}{dt}$有：<br>$$<br>\begin{align}<br>U_{p}&amp;&#x3D;IR_{p}\left(1-e^{-\frac{t}{R_{p}C_{p}}}\right)+U_{p}(0)e^{-\frac{t}{R_{p}C_{p}}}\<br>U_L&amp;&#x3D;U_{OCV}-IR_0-\left(IR_{p_1}\left(1-e^{-\frac{t}{R_{p_1}C_{p_1}}}\right)+U_{p_1}(0)e^{-\frac{t}{R_{p_1}C_{p_1}}}\right)-\left(IR_{p_2}\left(1-e^{-\frac{t}{R_{p_2}C_{p_2}}}\right)+U_{p_2}(0)e^{-\frac{t}{R_{p_2}C_{p_2}}}\right)<br>\end{align}<br>$$</p>
-<h3 id="2-2-参数识别"><a href="#2-2-参数识别" class="headerlink" title="2.2 参数识别"></a>2.2 参数识别</h3><h4 id="2-2-1-SOC-OCV"><a href="#2-2-1-SOC-OCV" class="headerlink" title="2.2.1 SOC-OCV"></a>2.2.1 SOC-OCV</h4><p>选择100%，95%，…，0%的测试节点中长时间静置的末端电压作为对应的OCV.</p>
-<img src="C:\Users\DRegionZ\AppData\Roaming\Typora\typora-user-images\image-20221202113529996.png" alt="image-20221202113529996" style="zoom: 50%;" />
-
-<h4 id="2-2-2-内阻"><a href="#2-2-2-内阻" class="headerlink" title="2.2.2 内阻"></a>2.2.2 内阻</h4><p>$$<br>R_0&#x3D;\frac{\Delta U_{AB}+\Delta U_{DC}}{2I}<br>$$</p>
-<h4 id="2-2-3-极化电阻-极化电容"><a href="#2-2-3-极化电阻-极化电容" class="headerlink" title="2.2.3 极化电阻&amp;极化电容"></a>2.2.3 极化电阻&amp;极化电容</h4><p>当BC段放电开始时，为零状态响应，有$t&#x3D;0, U_{p}(0)&#x3D;0$：<br>$$<br>U_L&#x3D;U_{OCV}-IR_0-IR_{p_1}\left(1-e^{-\frac{t}{R_{p_1}C_{p_1}}}\right)-IR_{p_2}\left(1-e^{-\frac{t}{R_{p_2}C_{p_2}}}\right)<br>$$<br>当DE段搁置时，为零输入响应，有$I&#x3D;0$：<br>$$<br>U(t)&#x3D;U_{OCV}-U_{p1}(0)e^{-\frac{t}{R_{p_1}C_{p_1}}}-U_{p2}(0)e^{-\frac{t}{R_{p_2}C_{p_2}}}<br>$$<br>&#x3D;&#x3D;用指数拟合的方法可以求出&#x3D;&#x3D;$U_{p1}(0), U_{p2}(0), -\frac{1}{R_{p_1}C_{p_1}}, -\frac{1}{R_{p_2}C_{p_2}}$。因为DE段开始为BC段结尾，因此：<br>$$<br>\begin{align}<br>U_{p1}(0)&amp;&#x3D;IR_{p_1}\left(1-e^{-\frac{T_C}{R_{p_1}C_{p_1}}}\right)\<br>U_{p2}(0)&amp;&#x3D;IR_{p_2}\left(1-e^{-\frac{T_C}{R_{p_2}C_{p_2}}}\right)<br>\end{align}<br>$$<br>从而求出具体$R_p，C_p$。对与更高阶的等效电路模型，求得的方法一致，只是参数更多。</p>
+</tbody>
+</table>
+</div>
+<h2 id="2-方法介绍"><a href="#2-方法介绍" class="headerlink" title="2. 方法介绍"></a>2. 方法介绍</h2><h3 id="2-1-等效电路模型"><a href="#2-1-等效电路模型" class="headerlink" title="2.1 等效电路模型"></a>2.1 等效电路模型</h3><p><img src="C:\Users\DRegionZ\AppData\Roaming\Typora\typora-user-images\image-20221115140556078.png" alt="image-20221115140556078" style="zoom:80%;" /></p>
+<p>二阶等效电路的动态方程如下：</p>
+<script type="math/tex; mode=display">
+\begin{align} U_L&=U_{OCV}-IR_0-U_{p1}-U_{p2} \\
+I&=\frac{U_{p1}}{R_{p1}}+C_{p1}\frac{dU_{p1}}{dt}=\frac{U_{p2}}{R_{p2}}+C_{p2}\frac{dU_{p2}}{dt}
+\end{align}</script><p>求解微分方程$I=\frac{U_{p}}{R_{p}}+C_{p}\frac{dU_{p}}{dt}$有：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+U_{p}&=IR_{p}\left(1-e^{-\frac{t}{R_{p}C_{p}}}\right)+U_{p}(0)e^{-\frac{t}{R_{p}C_{p}}}\\
+U_L&=U_{OCV}-IR_0-\left(IR_{p_1}\left(1-e^{-\frac{t}{R_{p_1}C_{p_1}}}\right)+U_{p_1}(0)e^{-\frac{t}{R_{p_1}C_{p_1}}}\right)-\left(IR_{p_2}\left(1-e^{-\frac{t}{R_{p_2}C_{p_2}}}\right)+U_{p_2}(0)e^{-\frac{t}{R_{p_2}C_{p_2}}}\right)
+\end{align}</script><h3 id="2-2-参数识别"><a href="#2-2-参数识别" class="headerlink" title="2.2 参数识别"></a>2.2 参数识别</h3><h4 id="2-2-1-SOC-OCV"><a href="#2-2-1-SOC-OCV" class="headerlink" title="2.2.1 SOC-OCV"></a>2.2.1 SOC-OCV</h4><p>选择100%，95%，…，0%的测试节点中长时间静置的末端电压作为对应的OCV.</p>
+<p><img src="C:\Users\DRegionZ\AppData\Roaming\Typora\typora-user-images\image-20221202113529996.png" alt="image-20221202113529996" style="zoom: 50%;" /></p>
+<h4 id="2-2-2-内阻"><a href="#2-2-2-内阻" class="headerlink" title="2.2.2 内阻"></a>2.2.2 内阻</h4><script type="math/tex; mode=display">
+R_0=\frac{\Delta U_{AB}+\Delta U_{DC}}{2I}</script><h4 id="2-2-3-极化电阻-amp-极化电容"><a href="#2-2-3-极化电阻-amp-极化电容" class="headerlink" title="2.2.3 极化电阻&amp;极化电容"></a>2.2.3 极化电阻&amp;极化电容</h4><p>当BC段放电开始时，为零状态响应，有$t=0, U_{p}(0)=0$：</p>
+<script type="math/tex; mode=display">
+U_L=U_{OCV}-IR_0-IR_{p_1}\left(1-e^{-\frac{t}{R_{p_1}C_{p_1}}}\right)-IR_{p_2}\left(1-e^{-\frac{t}{R_{p_2}C_{p_2}}}\right)</script><p>当DE段搁置时，为零输入响应，有$I=0$：</p>
+<script type="math/tex; mode=display">
+U(t)=U_{OCV}-U_{p1}(0)e^{-\frac{t}{R_{p_1}C_{p_1}}}-U_{p2}(0)e^{-\frac{t}{R_{p_2}C_{p_2}}}</script><p>==用指数拟合的方法可以求出==$U_{p1}(0), U_{p2}(0), -\frac{1}{R_{p_1}C_{p_1}}, -\frac{1}{R_{p_2}C_{p_2}}$。因为DE段开始为BC段结尾，因此：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+U_{p1}(0)&=IR_{p_1}\left(1-e^{-\frac{T_C}{R_{p_1}C_{p_1}}}\right)\\
+U_{p2}(0)&=IR_{p_2}\left(1-e^{-\frac{T_C}{R_{p_2}C_{p_2}}}\right)
+\end{align}</script><p>从而求出具体$R_p，C_p$。对与更高阶的等效电路模型，求得的方法一致，只是参数更多。</p>
 <h3 id="2-3-基于扩展卡尔曼滤波的SOC估算"><a href="#2-3-基于扩展卡尔曼滤波的SOC估算" class="headerlink" title="2.3 基于扩展卡尔曼滤波的SOC估算"></a>2.3 基于扩展卡尔曼滤波的SOC估算</h3><p>根据等效电路的参数识别有下表</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">SOC(%)</th>
-<th align="center">$U_{OCV}$</th>
-<th align="center">$R_{p1}$</th>
-<th align="center">$R_{p2}$</th>
-<th align="center">$C_{p1}$</th>
-<th align="center">$C_{p2}$</th>
-<th align="center">$R_0$</th>
+<th style="text-align:center">SOC(%)</th>
+<th style="text-align:center">$U_{OCV}$</th>
+<th style="text-align:center">$R_{p1}$</th>
+<th style="text-align:center">$R_{p2}$</th>
+<th style="text-align:center">$C_{p1}$</th>
+<th style="text-align:center">$C_{p2}$</th>
+<th style="text-align:center">$R_0$</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">100</td>
-<td align="center">$u_0$</td>
-<td align="center">$r_{11}$</td>
-<td align="center">$r_{21}$</td>
-<td align="center">$c_{11}$</td>
-<td align="center">$c_{21}$</td>
-<td align="center">$r_{01}$</td>
+<tbody>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">$u_0$</td>
+<td style="text-align:center">$r_{11}$</td>
+<td style="text-align:center">$r_{21}$</td>
+<td style="text-align:center">$c_{11}$</td>
+<td style="text-align:center">$c_{21}$</td>
+<td style="text-align:center">$r_{01}$</td>
 </tr>
 <tr>
-<td align="center">95</td>
-<td align="center">$u_1$</td>
-<td align="center">$r_{12}$</td>
-<td align="center">$r_{22}$</td>
-<td align="center">$c_{12}$</td>
-<td align="center">$c_{22}$</td>
-<td align="center">$r_{02}$</td>
+<td style="text-align:center">95</td>
+<td style="text-align:center">$u_1$</td>
+<td style="text-align:center">$r_{12}$</td>
+<td style="text-align:center">$r_{22}$</td>
+<td style="text-align:center">$c_{12}$</td>
+<td style="text-align:center">$c_{22}$</td>
+<td style="text-align:center">$r_{02}$</td>
 </tr>
 <tr>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
-<td align="center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
 </tr>
-</tbody></table>
-<p>状态变量设置为$X_k&#x3D;\left(SOC(k),U_{p1}(k),U_{p2}(k)\right)^T$，电芯最大可用容量C，时间间隔为t，则状态方程为<br>$$<br>X_{k}&#x3D;AX_{k-1}+BI_k+\omega_k<br>$$<br>其中，$\omega_k\sim N(0,Q_k)$，$A&#x3D;\left(\begin{matrix}1&amp;0&amp;0\0&amp;e^{-\frac{t}{C_{p1}R_{p1}}}&amp;0\0&amp;0&amp; e^{-\frac{t}{C_{p1}R_{p1}}}\end{matrix}\right)$，$B&#x3D;\left(\begin{matrix}-\frac{t×100}{C}\R_{p1}(1-e^{-\frac{t}{C_{p1}R_{p1}}})\R_{p2}(1-e^{-\frac{t}{C_{p2}R_{p2}}})\end{matrix}\right)$，矩阵中参数根据$SOC(k)$进行匹配.</p>
-<p>因为观测方程为<br>$$<br>\begin{align*}U_k&amp;&#x3D; U_{OCV}\left(SOC(k)\right)-U_{p1}(k)-U_{p2}(k)-I_kR_0+v_k\<br>\end{align*}<br>$$<br>其中，$v_k\sim N(0,R_k)$.</p>
-<p>把观测方程进行泰勒展开：<br>$$<br>\begin{align*}<br>U_k&amp;&#x3D; g(X_{k})&#x3D;U_{OCV}\left(SOC(k)\right)-U_{p1}(k)-U_{p2}(k)-I_kR_0+v_k\<br>U_k&amp;\approx g(X_{k-1}) + g’(X_{k-1})(X(k)-X(k-1))\\<br>H&amp;&#x3D;g’(X_{k-1})&#x3D;\left[\frac{\alpha g}{\alpha SOC(k-1)}\ \frac{\alpha g}{\alpha U_{p1}(k-1)}\ \frac{\alpha g}{\alpha U_{p1}(k-1)}\right]\<br>&amp;&#x3D;\left[U’<em>{OCV}(SOC(k-1))\ -1\ -1\right]\\<br>g(X</em>{k-1})&amp;&#x3D;U_{OCV}\left(SOC(k-1)\right)-U_{p1}(k-1)-U_{p2}(k-1)-IR_0\\\\<br>U_k&amp;\approx U_{OCV}\left(SOC(k-1)\right)-U_{p1}(k-1)-U_{p2}(k-1)-IR_0\<br>&amp;+ \left[U’<em>{OCV}(SOC(k-1))\ -1\ -1\right] \left[ \begin{matrix}SOC(k)\ U</em>{p1}(k)\U_{p2}(k)\end{matrix} \right]\<br>&amp;- \left[U’<em>{OCV}(SOC(k-1))\ -1\ -1\right] \left[ \begin{matrix}SOC(k-1)\U</em>{p1}(k-1)\U_{p2}(k-1)\end{matrix} \right]\<br>&amp;&#x3D;HX_{k}-IR_0+D_{k-1}<br>\end{align*}<br>$$</p>
-<p>上述过程可简化为以下流程，由于<br>$$<br>U_{OCV}\left(SOC(k)\right) \approx U_{OCV}\left(SOC(k-1)\right)+U_{OCV}^{\prime}(SOC(k-1))(SOC(k)-SOC(k-1))<br>$$<br>因此观测方程可写成<br>$$<br>\begin{align*}U_k&amp;\approx HX_{k}-I_kR_0+D_{k-1}+v_k\<br>\end{align*}<br>$$<br>其中<br>$$<br>H&#x3D;\left(\begin{matrix}U_{OCV}^{\prime}(SOC(k-1)),-1,-1\ \end{matrix}\right)<br>$$</p>
-<p>$$<br>D_{k-1}&#x3D;U_{OCV}\left(SOC(k-1)\right)-U_{OCV}^{\prime}(SOC(k-1))SOC(k-1)<br>$$</p>
-<p>根据卡尔曼滤波算法，算法步骤如下:</p>
+</tbody>
+</table>
+</div>
+<p>状态变量设置为$X_k=\left(SOC(k),U_{p1}(k),U_{p2}(k)\right)^T$，电芯最大可用容量C，时间间隔为t，则状态方程为</p>
+<script type="math/tex; mode=display">
+X_{k}=AX_{k-1}+BI_k+\omega_k</script><p>其中，$\omega_k\sim N(0,Q_k)$，$A=\left(\begin{matrix}1&amp;0&amp;0\\0&amp;e^{-\frac{t}{C_{p1}R_{p1}}}&amp;0\\0&amp;0&amp; e^{-\frac{t}{C_{p1}R_{p1}}}\end{matrix}\right)$，$B=\left(\begin{matrix}-\frac{t×100}{C}\\R_{p1}(1-e^{-\frac{t}{C_{p1}R_{p1}}})\\R_{p2}(1-e^{-\frac{t}{C_{p2}R_{p2}}})\end{matrix}\right)$，矩阵中参数根据$SOC(k)$进行匹配.</p>
+<p>因为观测方程为</p>
+<script type="math/tex; mode=display">
+\begin{align*}U_k&= U_{OCV}\left(SOC(k)\right)-U_{p1}(k)-U_{p2}(k)-I_kR_0+v_k\\
+\end{align*}</script><p>其中，$v_k\sim N(0,R_k)$.</p>
+<p>把观测方程进行泰勒展开：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+U_k&= g(X_{k})=U_{OCV}\left(SOC(k)\right)-U_{p1}(k)-U_{p2}(k)-I_kR_0+v_k\\
+U_k&\approx g(X_{k-1}) + g'(X_{k-1})(X(k)-X(k-1))\\\\
+H&=g'(X_{k-1})=\left[\frac{\alpha g}{\alpha SOC(k-1)}\ \frac{\alpha g}{\alpha U_{p1}(k-1)}\ \frac{\alpha g}{\alpha U_{p1}(k-1)}\right]\\
+&=\left[U'_{OCV}(SOC(k-1))\ -1\ -1\right]\\\\
+g(X_{k-1})&=U_{OCV}\left(SOC(k-1)\right)-U_{p1}(k-1)-U_{p2}(k-1)-IR_0\\\\\\\\
+U_k&\approx U_{OCV}\left(SOC(k-1)\right)-U_{p1}(k-1)-U_{p2}(k-1)-IR_0\\
+&+ \left[U'_{OCV}(SOC(k-1))\ -1\ -1\right] \left[ \begin{matrix}SOC(k)\\ U_{p1}(k)\\U_{p2}(k)\end{matrix} \right]\\
+&- \left[U'_{OCV}(SOC(k-1))\ -1\ -1\right] \left[ \begin{matrix}SOC(k-1)\\U_{p1}(k-1)\\U_{p2}(k-1)\end{matrix} \right]\\
+&=HX_{k}-IR_0+D_{k-1}
+\end{align*}</script><p>上述过程可简化为以下流程，由于</p>
+<script type="math/tex; mode=display">
+U_{OCV}\left(SOC(k)\right) \approx U_{OCV}\left(SOC(k-1)\right)+U_{OCV}^{\prime}(SOC(k-1))(SOC(k)-SOC(k-1))</script><p>因此观测方程可写成</p>
+<script type="math/tex; mode=display">
+\begin{align*}U_k&\approx HX_{k}-I_kR_0+D_{k-1}+v_k\\
+\end{align*}</script><p>其中</p>
+<script type="math/tex; mode=display">
+H=\left(\begin{matrix}U_{OCV}^{\prime}(SOC(k-1)),-1,-1\ \end{matrix}\right)</script><script type="math/tex; mode=display">
+D_{k-1}=U_{OCV}\left(SOC(k-1)\right)-U_{OCV}^{\prime}(SOC(k-1))SOC(k-1)</script><p>根据卡尔曼滤波算法，算法步骤如下:</p>
 <p><strong>1.初始化：</strong></p>
-<p>初始状态为$X_0&#x3D;\left(SOC(0),U_{p1}(0),U_{p2}(0)\right)^T$，其协方差矩阵为$P_0$，$Q_k$设置为固定值$Q$，$R_k$设置为固定值$R$.</p>
-<p><strong>2.预测阶段：</strong><br>$$<br>X_{k}&#x3D;AX_{k-1}+BI_k<br>$$</p>
-<p>$$<br>P_k&#x3D;AP_{k-1}A^T+Q_k<br>$$</p>
-<p><strong>3.修正阶段：</strong></p>
-<p>卡尔曼增益为<br>$$<br>K_k&#x3D;\frac{P_kH^T}{HP_kH^T+R_k}<br>$$<br>修正状态为<br>$$<br>X_k^{\prime}&#x3D;X_k+K_k(z_k-U_k)<br>$$<br>修正状态的协方差矩阵为<br>$$<br>P_k^{\prime}&#x3D;\left(I-K_kH\right)P_k<br>$$</p>
-<h3 id="2-4-基于无迹卡尔曼滤波的SOC估算"><a href="#2-4-基于无迹卡尔曼滤波的SOC估算" class="headerlink" title="2.4 基于无迹卡尔曼滤波的SOC估算"></a>2.4 基于无迹卡尔曼滤波的SOC估算</h3><p><strong>算法步骤：</strong></p>
+<p>初始状态为$X_0=\left(SOC(0),U_{p1}(0),U_{p2}(0)\right)^T$，其协方差矩阵为$P_0$，$Q_k$设置为固定值$Q$，$R_k$设置为固定值$R$.</p>
+<p><strong>2.预测阶段：</strong></p>
+<script type="math/tex; mode=display">
+X_{k}=AX_{k-1}+BI_k</script><script type="math/tex; mode=display">
+P_k=AP_{k-1}A^T+Q_k</script><p><strong>3.修正阶段：</strong></p>
+<p>卡尔曼增益为</p>
+<script type="math/tex; mode=display">
+K_k=\frac{P_kH^T}{HP_kH^T+R_k}</script><p>修正状态为</p>
+<script type="math/tex; mode=display">
+X_k^{\prime}=X_k+K_k(z_k-U_k)</script><p>修正状态的协方差矩阵为</p>
+<script type="math/tex; mode=display">
+P_k^{\prime}=\left(I-K_kH\right)P_k</script><h3 id="2-4-基于无迹卡尔曼滤波的SOC估算"><a href="#2-4-基于无迹卡尔曼滤波的SOC估算" class="headerlink" title="2.4 基于无迹卡尔曼滤波的SOC估算"></a>2.4 基于无迹卡尔曼滤波的SOC估算</h3><p><strong>算法步骤：</strong></p>
 <ol>
 <li><strong>初始化</strong></li>
 </ol>
-<p>初始状态为$X_0&#x3D;\left(SOC(0),U_{p1}(0),U_{p2}(0)\right)^T$，其协方差矩阵为$P_0$，$Q_k$设置为固定值$Q$，$R_k$设置为固定值$R$.</p>
-<ol start="2">
+<p>初始状态为$X_0=\left(SOC(0),U_{p1}(0),U_{p2}(0)\right)^T$，其协方差矩阵为$P_0$，$Q_k$设置为固定值$Q$，$R_k$设置为固定值$R$.</p>
+<ol>
 <li><strong>预测阶段</strong></li>
 </ol>
-<p>状态变量设置为$X_k&#x3D;\left(SOC(k),U_{p1}(k),U_{p2}(k)\right)^T$，电芯最大可用容量C，时间间隔为t，则状态方程为<br>$$<br>X_{k}&#x3D;AX_{k-1}+BI_k+\omega_k<br>$$<br>其中，$\omega_k\sim N(0,Q_k)$，$A&#x3D;\left(\begin{matrix}1&amp;0&amp;0\0&amp;e^{-\frac{t}{C_{p1}R_{p1}}}&amp;0\0&amp;0&amp; e^{-\frac{t}{C_{p1}R_{p1}}}\end{matrix}\right)$，$B&#x3D;\left(\begin{matrix}-\frac{t×100}{C}\R_{p1}(1-e^{-\frac{t}{C_{p1}R_{p1}}})\R_{p2}(1-e^{-\frac{t}{C_{p2}R_{p2}}})\end{matrix}\right)$，矩阵中参数根据$SOC(k)$进行匹配.</p>
+<p>状态变量设置为$X_k=\left(SOC(k),U_{p1}(k),U_{p2}(k)\right)^T$，电芯最大可用容量C，时间间隔为t，则状态方程为</p>
+<script type="math/tex; mode=display">
+X_{k}=AX_{k-1}+BI_k+\omega_k</script><p>其中，$\omega_k\sim N(0,Q_k)$，$A=\left(\begin{matrix}1&amp;0&amp;0\\0&amp;e^{-\frac{t}{C_{p1}R_{p1}}}&amp;0\\0&amp;0&amp; e^{-\frac{t}{C_{p1}R_{p1}}}\end{matrix}\right)$，$B=\left(\begin{matrix}-\frac{t×100}{C}\\R_{p1}(1-e^{-\frac{t}{C_{p1}R_{p1}}})\\R_{p2}(1-e^{-\frac{t}{C_{p2}R_{p2}}})\end{matrix}\right)$，矩阵中参数根据$SOC(k)$进行匹配.</p>
 <ul>
-<li>&#x3D;&#x3D;构造sigma点集，X有3个变量，n&#x3D;3。&#x3D;&#x3D;</li>
+<li>==构造sigma点集，X有3个变量，n=3。==</li>
 </ul>
-<p>$$<br>\begin{align}<br>X^{(0)}<em>k&amp;&#x3D;X</em>{k-1}\\<br>X^{(1)}<em>k&amp;&#x3D;X</em>{k-1}+\left({\sqrt{(n+\lambda)P_{k-1}}}\right)<em>{第1列}\<br>X^{(2)}<em>k&amp;&#x3D;X</em>{k-1}+\left({\sqrt{(n+\lambda)P</em>{k-1}}}\right)<em>{第2列}\<br>X^{(3)}<em>k&amp;&#x3D;X</em>{k-1}+\left({\sqrt{(n+\lambda)P</em>{k-1}}}\right)_{第3列}\\</p>
-<p>X^{(4)}<em>k&amp;&#x3D;X</em>{k-1}-\left({\sqrt{(n+\lambda)P_{k-1}}}\right)<em>{第1列}\<br>X^{(5)}<em>k&amp;&#x3D;X</em>{k-1}-\left({\sqrt{(n+\lambda)P</em>{k-1}}}\right)<em>{第2列}\<br>X^{(6)}<em>k&amp;&#x3D;X</em>{k-1}-\left({\sqrt{(n+\lambda)P</em>{k-1}}}\right)_{第3列}\\</p>
-<p>\end{align}<br>$$</p>
-<ul>
-<li>&#x3D;&#x3D;各个sigma点代入状态方程计算&#x3D;&#x3D;</li>
+<script type="math/tex; mode=display">
+\begin{align}
+X^{(0)}_k&=X_{k-1}\\\\
+X^{(1)}_k&=X_{k-1}+\left({\sqrt{(n+\lambda)P_{k-1}}}\right)_{第1列}\\
+X^{(2)}_k&=X_{k-1}+\left({\sqrt{(n+\lambda)P_{k-1}}}\right)_{第2列}\\
+X^{(3)}_k&=X_{k-1}+\left({\sqrt{(n+\lambda)P_{k-1}}}\right)_{第3列}\\\\
+
+X^{(4)}_k&=X_{k-1}-\left({\sqrt{(n+\lambda)P_{k-1}}}\right)_{第1列}\\
+X^{(5)}_k&=X_{k-1}-\left({\sqrt{(n+\lambda)P_{k-1}}}\right)_{第2列}\\
+X^{(6)}_k&=X_{k-1}-\left({\sqrt{(n+\lambda)P_{k-1}}}\right)_{第3列}\\\\
+
+\end{align}</script><ul>
+<li>==各个sigma点代入状态方程计算==</li>
 </ul>
-<p>$$<br>\begin{align}<br>{X_k^{(i)}}^-&amp;&#x3D;AX_k^{(i)}+BI_k\<br>X_{k}^-&amp;&#x3D;\sum_{i&#x3D;0}^{2n}w_m^{i}{X_k^{(i)}}^-\<br>P_k^-&amp;&#x3D;\sum_{i&#x3D;0}^{2n}w_c^{i}[{X_k^{(i)}}^–X_{k}^-][{X_k^{(i)}}^–X_{k}^-]^{T}+Q\<br>\end{align}<br>$$</p>
-<p>其中，<br>$$<br>\left{\begin{array}{c}<br>w_m^{(0)}&#x3D;\frac{\lambda}{n+\lambda}\<br>w_m^{(i)}&#x3D;\frac{\lambda}{2(n+\lambda)},i&#x3D;1 \sim 2n\<br>w_c^{(0)}&#x3D;\frac{\lambda}{n+\lambda}+\left(1-a^{2}+\beta\right) \<br>w_c^{(i)}&#x3D;\frac{\lambda}{2(n+\lambda)},i&#x3D;1 \sim 2n\<br>\end{array}\right.<br>$$<br>无迹变换引入四个参数：$\alpha,\beta,\kappa,\lambda$。其中$\lambda$满足：<br>$$<br>\lambda &#x3D; \alpha^2(n+\kappa)-n<br>$$<br>&#x3D;&#x3D;应为是线性变换，上述的计算结果与下面先验计算一样&#x3D;&#x3D;<br>$$<br>X_{k}^-&#x3D;AX_{k-1}+BI_k<br>$$</p>
-<p>$$<br>P_k^-&#x3D;AP_{k-1}A^T+Q_k<br>$$</p>
-<ol start="3">
+<script type="math/tex; mode=display">
+\begin{align}
+{X_k^{(i)}}^-&=AX_k^{(i)}+BI_k\\
+X_{k}^-&=\sum_{i=0}^{2n}w_m^{i}{X_k^{(i)}}^-\\
+P_k^-&=\sum_{i=0}^{2n}w_c^{i}[{X_k^{(i)}}^--X_{k}^-][{X_k^{(i)}}^--X_{k}^-]^{T}+Q\\
+\end{align}</script><p>其中，</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{c}
+w_m^{(0)}=\frac{\lambda}{n+\lambda}\\
+w_m^{(i)}=\frac{\lambda}{2(n+\lambda)},i=1 \sim 2n\\
+w_c^{(0)}=\frac{\lambda}{n+\lambda}+\left(1-a^{2}+\beta\right) \\
+w_c^{(i)}=\frac{\lambda}{2(n+\lambda)},i=1 \sim 2n\\
+\end{array}\right.</script><p>无迹变换引入四个参数：$\alpha,\beta,\kappa,\lambda$。其中$\lambda$满足：</p>
+<script type="math/tex; mode=display">
+\lambda = \alpha^2(n+\kappa)-n</script><p>==应为是线性变换，上述的计算结果与下面先验计算一样==</p>
+<script type="math/tex; mode=display">
+X_{k}^-=AX_{k-1}+BI_k</script><script type="math/tex; mode=display">
+P_k^-=AP_{k-1}A^T+Q_k</script><ol>
 <li><strong>修正阶段</strong></li>
 </ol>
-<p>观测方程为<br>$$<br>\begin{align*}U_k&amp;&#x3D; U_{OCV}\left(SOC(k)\right)-U_{p1}(k)-U_{p2}(k)-I_kR_0+v_k\<br>\end{align*}<br>$$<br>其中，$v_k\sim N(0,R_k)$.</p>
+<p>观测方程为</p>
+<script type="math/tex; mode=display">
+\begin{align*}U_k&= U_{OCV}\left(SOC(k)\right)-U_{p1}(k)-U_{p2}(k)-I_kR_0+v_k\\
+\end{align*}</script><p>其中，$v_k\sim N(0,R_k)$.</p>
 <ul>
-<li>&#x3D;&#x3D;构造sigma点集&#x3D;&#x3D;</li>
+<li>==构造sigma点集==</li>
 </ul>
-<p>$$<br>\begin{align}<br>X^{(0)}&amp;&#x3D;X_k^-\\<br>X^{(1)}&amp;&#x3D;X_k^-+\left({\sqrt{(n+\lambda)P_{k}^-}}\right)<em>{第1列}\<br>X^{(2)}&amp;&#x3D;X_k^-+\left({\sqrt{(n+\lambda)P</em>{k}^-}}\right)<em>{第2列}\<br>X^{(3)}&amp;&#x3D;X_k^-+\left({\sqrt{(n+\lambda)P</em>{k}^-}}\right)_{第3列}\\</p>
-<p>X^{(4)}&amp;&#x3D;X_k^–\left({\sqrt{(n+\lambda)P_{k}^-}}\right)<em>{第1列}\<br>X^{(5)}&amp;&#x3D;X_k^–\left({\sqrt{(n+\lambda)P</em>{k}^-}}\right)<em>{第2列}\<br>X^{(6)}&amp;&#x3D;X_k^–\left({\sqrt{(n+\lambda)P</em>{k}^-}}\right)_{第3列}\\<br>\end{align}<br>$$</p>
-<ul>
-<li>&#x3D;&#x3D;计算各个sigma点的非线性变换，sigma点集代入观测方程，得到预测的观测量：&#x3D;&#x3D;</li>
+<script type="math/tex; mode=display">
+\begin{align}
+X^{(0)}&=X_k^-\\\\
+X^{(1)}&=X_k^-+\left({\sqrt{(n+\lambda)P_{k}^-}}\right)_{第1列}\\
+X^{(2)}&=X_k^-+\left({\sqrt{(n+\lambda)P_{k}^-}}\right)_{第2列}\\
+X^{(3)}&=X_k^-+\left({\sqrt{(n+\lambda)P_{k}^-}}\right)_{第3列}\\\\
+
+X^{(4)}&=X_k^--\left({\sqrt{(n+\lambda)P_{k}^-}}\right)_{第1列}\\
+X^{(5)}&=X_k^--\left({\sqrt{(n+\lambda)P_{k}^-}}\right)_{第2列}\\
+X^{(6)}&=X_k^--\left({\sqrt{(n+\lambda)P_{k}^-}}\right)_{第3列}\\\\
+\end{align}</script><ul>
+<li>==计算各个sigma点的非线性变换，sigma点集代入观测方程，得到预测的观测量：==</li>
 </ul>
-<p>$$<br>\begin{align}<br>X^{(i)}&amp;&#x3D;\left(SOC^{(i)},U_{p1}^{(i)},U_{p2}^{(i)}\right)^T\<br>Z(k)^{(i)}&amp;&#x3D;U_{OCV}(SOC^{(i)})-U_{p1}^{(i)}-U_{p2}^{(i)}-I_kR_0\<br>\end{align}<br>$$</p>
-<ul>
-<li>&#x3D;&#x3D;通过加权求得观测量新的均值及协方差：&#x3D;&#x3D;</li>
+<script type="math/tex; mode=display">
+\begin{align}
+X^{(i)}&=\left(SOC^{(i)},U_{p1}^{(i)},U_{p2}^{(i)}\right)^T\\
+Z(k)^{(i)}&=U_{OCV}(SOC^{(i)})-U_{p1}^{(i)}-U_{p2}^{(i)}-I_kR_0\\
+\end{align}</script><ul>
+<li>==通过加权求得观测量新的均值及协方差：==</li>
 </ul>
-<p>$$<br>\begin{align}<br>\bar{Z}(k)&amp;&#x3D;\sum_{i&#x3D;0}^{2n}w_m^{i}Z(k)^{(i)}\<br>P_{z_{k}z_{k}}&amp;&#x3D;\sum_{i&#x3D;0}^{2n}w_c^{i}[Z(k)^{(i)}-\bar{Z}(k)][Z(k)^{i}-\bar{Z}(k)]^{T}+R\<br>P_{x_{k}z_{k}}&amp;&#x3D;\sum_{i&#x3D;0}^{2n}w_c^{i}[{X^{(i)}}<em>{k}^- -X</em>{k}^-][Z(k)^{i}-\bar{Z}(k)]^{T}<br>\end{align}<br>$$</p>
-<p>其中，<br>$$<br>\left{\begin{array}{c}<br>w_m^{(0)}&#x3D;\frac{\lambda}{n+\lambda}\<br>w_m^{(i)}&#x3D;\frac{1}{2(n+\lambda)},i&#x3D;1 \sim 2n\<br>w_c^{(0)}&#x3D;\frac{\lambda}{n+\lambda}+\left(1-a^{2}+\beta\right) \<br>w_c^{(i)}&#x3D;\frac{1}{2(n+\lambda)},i&#x3D;1 \sim 2n\<br>\end{array}\right.<br>$$</p>
-<ul>
-<li>&#x3D;&#x3D;更新K值&#x3D;&#x3D;</li>
+<script type="math/tex; mode=display">
+\begin{align}
+\bar{Z}(k)&=\sum_{i=0}^{2n}w_m^{i}Z(k)^{(i)}\\
+P_{z_{k}z_{k}}&=\sum_{i=0}^{2n}w_c^{i}[Z(k)^{(i)}-\bar{Z}(k)][Z(k)^{i}-\bar{Z}(k)]^{T}+R\\
+P_{x_{k}z_{k}}&=\sum_{i=0}^{2n}w_c^{i}[{X^{(i)}}_{k}^- -X_{k}^-][Z(k)^{i}-\bar{Z}(k)]^{T}
+\end{align}</script><p>其中，</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{c}
+w_m^{(0)}=\frac{\lambda}{n+\lambda}\\
+w_m^{(i)}=\frac{1}{2(n+\lambda)},i=1 \sim 2n\\
+w_c^{(0)}=\frac{\lambda}{n+\lambda}+\left(1-a^{2}+\beta\right) \\
+w_c^{(i)}=\frac{1}{2(n+\lambda)},i=1 \sim 2n\\
+\end{array}\right.</script><ul>
+<li>==更新K值==</li>
 </ul>
-<p>$$<br>K_k&#x3D;P_{x_{k}z_{k}}P_{z_{k}z_{k}}^{-1}<br>$$</p>
-<ul>
-<li>&#x3D;&#x3D;系统状态更新和协方差更新&#x3D;&#x3D;</li>
+<script type="math/tex; mode=display">
+K_k=P_{x_{k}z_{k}}P_{z_{k}z_{k}}^{-1}</script><ul>
+<li>==系统状态更新和协方差更新==</li>
 </ul>
-<p>$$<br>\begin{align}<br>\hat{X}(k)&amp;&#x3D;X_k^-+K_k[Z(k)-\bar{Z}(k)]\<br>P(k)&amp;&#x3D;P_k^–K_k P_{z_{k}z_{k}} K^{T}_{k}<br>\end{align}<br>$$</p>
-<h3 id="2-3-基于自适应卡尔曼滤波"><a href="#2-3-基于自适应卡尔曼滤波" class="headerlink" title="2.3 基于自适应卡尔曼滤波"></a>2.3 基于自适应卡尔曼滤波</h3><p>参考论文：《Adaptive Adjustment of Noise Covariance in Kalman Filter for Dynamic State Estimation》</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\hat{X}(k)&=X_k^-+K_k[Z(k)-\bar{Z}(k)]\\
+P(k)&=P_k^--K_k P_{z_{k}z_{k}} K^{T}_{k}
+\end{align}</script><h3 id="2-3-基于自适应卡尔曼滤波"><a href="#2-3-基于自适应卡尔曼滤波" class="headerlink" title="2.3 基于自适应卡尔曼滤波"></a>2.3 基于自适应卡尔曼滤波</h3><p>参考论文：《Adaptive Adjustment of Noise Covariance in Kalman Filter for Dynamic State Estimation》</p>
 <p>一般情况下，kalman滤波中的Q、R都是根据经验、实验或数据手册得到的，但是有些参数是无法获得的，尤其是过程噪声，就需要通过不断试凑确定参数，显然是不靠谱的。</p>
 <p>自适应卡尔曼滤波提供一种自适应调整Q、R的方法，不需要精确的初值，就可以获得较高的滤波精度。</p>
-<img src="file:///C:/Users/DRegionZ/AppData/Local/Temp/企业微信截图_16752366473547.png" alt="img" style="zoom: 50%;" />
-
+<p><img src="file:///C:/Users/DRegionZ/AppData/Local/Temp/企业微信截图_16752366473547.png" alt="img" style="zoom: 50%;" /></p>
 <ul>
 <li>只要Q、R的比值和Qtrue、Rtrue相等，就能获得最优的性能，并不需要保证Q、R和真实值接近。</li>
 </ul>
@@ -525,16 +624,12 @@
       
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
@@ -706,6 +801,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
